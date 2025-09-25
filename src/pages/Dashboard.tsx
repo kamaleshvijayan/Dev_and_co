@@ -38,6 +38,10 @@ export default function Dashboard({ onLogout }: { onLogout: () => void }) {
                 <p className="subtle">Active Sensors</p>
                 <p className="mt-1 text-2xl font-semibold">24</p>
               </div>
+              <div>
+                <p className="subtle">Inactive Sensor</p>
+                <p className="mt-1 text-2xl font-semibold">0</p>
+              </div>
             </div>
           </Card>
           <Card>
@@ -54,13 +58,31 @@ export default function Dashboard({ onLogout }: { onLogout: () => void }) {
         <div className="grid md:grid-cols-2 gap-4">
           <a href="/drone" className="block">
             <Card className="card-hover">
-              <CardHeader title="Drone Image Detect" subtitle="Module" right={<Badge>Ready</Badge>} />
-              <p className="subtle text-sm">Upload images and detect crack severity.</p>
+              <CardHeader 
+                title={
+                  <span style={{display: 'flex', alignItems: 'center', gap: 8}}>
+                    <span style={{fontSize: '1.3em'}}>🚁</span>
+                    <span>Drone Camera Detect</span>
+                  </span>
+                }
+                subtitle="Module"  
+                right={<Badge>Ready</Badge>} 
+              />
+              <p className="subtle text-sm">Start the Drone and detect crack severity.</p>
             </Card>
           </a>
           <a href="/frequency" className="block">
             <Card className="card-hover">
-              <CardHeader title="Frequency Detect" subtitle="Module" right={<Badge tone="warn">Monitoring</Badge>} />
+              <CardHeader 
+                title={
+                  <span style={{display: 'flex', alignItems: 'center', gap: 8}}>
+                    <span style={{fontSize: '1.3em'}}>📡</span>
+                    <span>Frequency Detect</span>
+                  </span>
+                }
+                subtitle="Module" 
+                right={<Badge tone="warn">Monitoring</Badge>} 
+              />
               <p className="subtle text-sm">Monitor sensor readings and risk map.</p>
             </Card>
           </a>

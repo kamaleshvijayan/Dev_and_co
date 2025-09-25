@@ -7,9 +7,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       {/* Fixed top bar */}
       <div className="fixed top-0 inset-x-0 z-20 backdrop-blur border-b border-white/10 bg-black/30">
         <div className="container-page py-2 flex items-center justify-between">
-          <a href="/" className="text-sm font-semibold">⛏️ Mining Monitor</a>
+          <a href="/" className="text-sm font-semibold">Mining Monitor  </a>
           <div className="flex items-center gap-2">
             <ThemeToggle />
+            <a href="/Dashboard" className="px-3 py-1.5 rounded bg-white/5 border border-white/10 text-sm">Dashboard</a>
             <a href="/drone" className="px-3 py-1.5 rounded bg-white/5 border border-white/10 text-sm">Drone</a>
             
             <a href="/frequency" className="px-3 py-1.5 rounded bg-white/5 border border-white/10 text-sm">Frequency</a>

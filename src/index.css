@@ -1,4 +1,13 @@
 @import "tailwindcss";
+@import "tailwindcss";
+
+/* Blinking for critical sensors */
+.blinking-marker {
+  animation: blink 1s steps(2, start) infinite;
+}
+@keyframes blink {
+  to { opacity: 0.2; }
+}
 
 /* App base */
 :root {
@@ -6,7 +15,7 @@
 }
 
 html.theme-light body {
-  background: radial-gradient(1200px 800px at 10% -10%, rgba(99,102,241,0.06), transparent 60%),
+  background: radial-gradient(1200px 800px at 10% -10%, rgba(219, 219, 225, 0.06), transparent 60%),
               radial-gradient(1000px 700px at 110% 10%, rgba(34,197,94,0.06), transparent 60%),
               linear-gradient(180deg, #f7f8fc 0%, #eef1f7 100%);
   color: #0f172a;

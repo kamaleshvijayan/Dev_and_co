@@ -50,6 +50,14 @@ export default function App() {
           }
         />
         <Route
+          path="/Dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard onLogout={auth.logout} />
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="/drone"
           element={
             <ProtectedRoute>

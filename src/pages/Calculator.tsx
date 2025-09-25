@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 import Layout from '../components/Layout'
 import { Card, CardHeader } from '../components/Card'
 import Button from '../components/Button'
@@ -264,6 +264,186 @@ export default function Calculator() {
           </Card>
         </div>
       </div>
+      {/* Mining Explosive Interactive Box */}
+      <div className="mt-8">
+        <Card>
+          <CardHeader title="Mining Explosive Manual" subtitle="Select Surface and Ore to see Explosive" />
+          <MiningExplosiveSelector />
+        </Card>
+      </div>
     </Layout>
   )
+}
+
+// Data for mining explosive reference
+const miningExplosiveData = [
+  {
+    surface: 'Lateritic soil / laterite crust',
+    ores: [
+      'bauxite',
+      'iron ores',
+      'manganese',
+      'nickel',
+      'cobalt',
+      'chromite',
+      'gold',
+      'platinum group elements',
+      'rare earth elements',
+      'aluminum',
+      'copper',
+      'zinc',
+      'lead',
+      'tin',
+      'titanium',
+      'other lateritic minerals'
+    ],
+    explosive: 'bulk emulsion / ANFO',
+  },
+  {
+    surface: 'Red / ferruginous soils',
+    ores: ['iron (hematite, magnetite)', 'sometimes Mn'],
+    explosive: 'bulk emulsion / ANFO',
+  },
+  {
+    surface: 'Alluvial / placer (riverbeds, gravels)',
+    ores: ['placer gold', 'tin', 'gemstones'],
+    explosive: 'prefer non-explosive methods or very low-energy controlled blasting',
+  },
+  {
+    surface: 'Black cotton / regur over basalt',
+    ores: ['base metals (Cu, Mn)', 'lateritic Ni in some regions'],
+    explosive: 'bulk emulsion / higher-energy bulk products',
+  },
+  {
+    surface: 'Calcareous / carbonate surfaces (limestone/marl)',
+    ores: ['lead-zinc', 'barite', 'fluorspar'],
+    explosive: 'packaged products or bulk emulsion',
+  },
+  {
+    surface: 'Saprolite / deeply weathered profiles',
+    ores: ['supergene concentrations (Ni laterite, enriched Cu zones)'],
+    explosive: 'bulk emulsion / low-energy approaches',
+  },
+  {
+    surface: 'Gravelly colluvium / talus',
+    ores: [
+      'secondary metal concentrations (variable)',
+      'gold nuggets',
+      'rare earth minerals',
+      'tin',
+      'tungsten',
+      'platinum group elements',
+      'gemstones',
+      'heavy mineral sands',
+      'copper',
+      'lead',
+      'zinc',
+      'nickel',
+      'iron',
+      'manganese',
+      'chromite',
+      'bauxite',
+      'other placer minerals'
+    ],
+    explosive: 'non-explosive or specialist controlled blasting',
+  },
+  {
+    surface: 'Glacial till / moraines',
+    ores: ['scattered heavy minerals / variable concentrations'],
+    explosive: 'non-explosive / specialist approach',
+  },
+  {
+    surface: 'Hard igneous outcrops (granite, gabbro, basalt)',
+    ores: [
+      'iron (Fe)',
+      'copper (Cu)',
+      'nickel (Ni)',
+      'platinum group elements (PGE)'
+    ],
+    explosive: 'high-energy bulk products or packaged dynamite/emulsions',
+  },
+  {
+    surface: 'Shales / weak sediments (mudstone)',
+    ores: ['stratiform deposits', 'coal seams (site dependent)'],
+    explosive: 'low-energy packaged products or engineered emulsions',
+  },
+];
+
+
+// Interactive selector component for mining explosives
+function MiningExplosiveSelector() {
+
+
+  const [selectedSurface, setSelectedSurface] = useState('');
+  const [selectedOre, setSelectedOre] = useState('');
+  const oresForSurface = selectedSurface
+    ? miningExplosiveData.find(d => d.surface === selectedSurface)?.ores || []
+    : [];
+
+  // When surface changes, reset ore selection
+  useEffect(() => {
+    setSelectedOre('');
+  }, [selectedSurface]);
+
+  // Find the matching explosive
+  const matching = miningExplosiveData.find(d => d.surface === selectedSurface && d.ores.includes(selectedOre));
+  const explosive = matching ? matching.explosive : '—';
+
+  return (
+    <div className="p-4">
+      {/* Custom dark styles for select dropdowns */}
+      <style>{`
+        .mining-explosive-select, .mining-explosive-select option {
+          background-color: #23263a !important;
+          color: #f3f4f6 !important;
+        }
+        .mining-explosive-select:focus {
+          outline: 2px solid #6366f1;
+        }
+      `}</style>
+      <div className="grid md:grid-cols-3 gap-6">
+        {/* Surface selector */}
+        <div>
+          <label className="block text-xs subtle mb-1">Surface</label>
+          <select
+            className="mining-explosive-select w-full max-w-xs rounded bg-white/10 border border-white/20 px-2 py-2 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            style={{ minWidth: 0 }}
+            value={selectedSurface}
+            onChange={e => setSelectedSurface(e.target.value)}
+          >
+            <option value="" disabled>Select surface</option>
+            {miningExplosiveData.map(d => (
+              <option key={d.surface} value={d.surface}>{d.surface}</option>
+            ))}
+          </select>
+        </div>
+        {/* Ore selector */}
+        <div>
+          <label className="block text-xs subtle mb-1">Type of Ore</label>
+          <select
+            className="mining-explosive-select w-full max-w-xs rounded bg-white/10 border border-white/20 px-2 py-2 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            style={{ minWidth: 0 }}
+            value={selectedOre}
+            onChange={e => setSelectedOre(e.target.value)}
+            disabled={!selectedSurface || oresForSurface.length === 0}
+          >
+            <option value="" disabled>Select ore</option>
+            {oresForSurface.map(ore => (
+              <option key={ore} value={ore}>{ore}</option>
+            ))}
+          </select>
+        </div>
+        {/* Explosive display */}
+        <div>
+          <label className="block text-xs subtle mb-1">Type of Explosive</label>
+          <div className="rounded bg-white/5 border border-white/20 px-2 py-2 min-h-[40px] text-white flex items-center max-w-xs" style={{ minWidth: 0 }}>
+            {selectedSurface && selectedOre ? explosive : '—'}
+          </div>
+        </div>
+      </div>
+      <div className="text-xs text-yellow-300 mt-4">
+        ⚠ Reminder: these are high-level, non-actionable planning hints only. Final explosive family, blast design and all operational details must be chosen and signed off by a licensed blasting engineer in compliance with local laws, permits, magazine rules and environmental limits.
+      </div>
+    </div>
+  );
 }
