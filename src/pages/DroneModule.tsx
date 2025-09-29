@@ -84,20 +84,12 @@ export default function DroneModule() {
     });
   }, [detectedImages]);
 
-  // Fetch detected images periodically when the camera is active
+  // Always fetch detected images periodically
   useEffect(() => {
-    let intervalId: any;
-    if (isCameraActive) {
-      // Fetch immediately, then set an interval
-      fetchDetectedImages();
-      intervalId = setInterval(fetchDetectedImages, 5000); // Fetch every 5 seconds
-    }
-    return () => {
-      if (intervalId) {
-        clearInterval(intervalId);
-      }
-    };
-  }, [isCameraActive]);
+    fetchDetectedImages(); // Fetch immediately
+    const intervalId = setInterval(fetchDetectedImages, 5000); // Fetch every 5 seconds
+    return () => clearInterval(intervalId);
+  }, []);
 
   // Cleanup camera on unmount
   useEffect(() => {
