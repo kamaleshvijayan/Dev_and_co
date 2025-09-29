@@ -18,7 +18,6 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip,
 
 type Sensor = { id: string; name: string; value: number }
 
-type Props = { onLogout: () => void }
 
 const initialSensors: Sensor[] = Array.from({ length: 16 }).map((_, i) => ({
   id: `S-${(i + 1).toString().padStart(2, '0')}`,
@@ -26,15 +25,7 @@ const initialSensors: Sensor[] = Array.from({ length: 16 }).map((_, i) => ({
   value: Math.round(20 + Math.random() * 70),
 }))
 
-export default function FrequencyModule({ onLogout }: Props) {
-  // Assign random lat/lng to each sensor (India bounding box)
-  const [sensorLocations] = useState(() =>
-    initialSensors.map((s) => ({
-      ...s,
-      lat: 8 + Math.random() * 20, // 8 to 28
-      lng: 68 + Math.random() * 25 // 68 to 93
-    }))
-  )
+export default function FrequencyModule() {
   const [sensors, setSensors] = useState<Sensor[]>(initialSensors)
   const [selected, setSelected] = useState<Sensor>(initialSensors[0])
   const [live, setLive] = useState<boolean>(true)

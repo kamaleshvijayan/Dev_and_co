@@ -45,7 +45,7 @@ export default function App() {
           path="/"
           element={
             <ProtectedRoute>
-              <Dashboard onLogout={auth.logout} />
+              <Dashboard />
             </ProtectedRoute>
           }
         />
@@ -53,7 +53,7 @@ export default function App() {
           path="/Dashboard"
           element={
             <ProtectedRoute>
-              <Dashboard onLogout={auth.logout} />
+              <Dashboard />
             </ProtectedRoute>
           }
         />
@@ -61,7 +61,7 @@ export default function App() {
           path="/drone"
           element={
             <ProtectedRoute>
-              <DroneModule onLogout={auth.logout} />
+              <DroneModule />
             </ProtectedRoute>
           }
         />
@@ -69,7 +69,7 @@ export default function App() {
           path="/frequency"
           element={
             <ProtectedRoute>
-              <FrequencyModule onLogout={auth.logout} />
+              <FrequencyModule />
             </ProtectedRoute>
           }
         />

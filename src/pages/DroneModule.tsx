@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import { Card, CardHeader } from '../components/Card';
 import Badge from '../components/Badge';
@@ -14,38 +14,16 @@ type Detection = {
   mlModel?: string;
 };
 
-type Props = { onLogout: () => void };
-
 const severities: Detection['severity'][] = ['No Crack', 'Minor', 'Medium', 'Severe', 'Critical'];
 const zones = ['North', 'South', 'East', 'West', 'Central'];
 const BACKEND_URL = 'http://127.0.0.1:5000'; // The URL of your Flask backend
 
-export default function DroneModule({ onLogout }: Props) {
+export default function DroneModule() {
   const [detectedImages, setDetectedImages] = useState<string[]>([]);
   const [activities, setActivities] = useState<Detection[]>([]);
   const [isCameraActive, setIsCameraActive] = useState(false);
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [cameraError, setCameraError] = useState<string | null>(null);
 
-  const fileRef = useRef<HTMLInputElement | null>(null);
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-
-  // Function to add activity to the log
-  const addActivity = (filename: string) => {
-    const severity = severities[Math.floor(Math.random() * severities.length)];
-    const zone = zones[Math.floor(Math.random() * zones.length)] + `-${Math.floor(Math.random() * 5) + 1}`;
-    const timestamp = new Date().toLocaleString();
-    const id = crypto.randomUUID();
-    const d: Detection = {
-      id,
-      filename,
-      severity,
-      zone,
-      timestamp,
-    };
-    setActivities((a) => [d, ...a]);
-  };
 
   // Function to start the camera on the backend
   const startCamera = async () => {
@@ -108,7 +86,7 @@ export default function DroneModule({ onLogout }: Props) {
 
   // Fetch detected images periodically when the camera is active
   useEffect(() => {
-    let intervalId: NodeJS.Timeout;
+    let intervalId: any;
     if (isCameraActive) {
       // Fetch immediately, then set an interval
       fetchDetectedImages();

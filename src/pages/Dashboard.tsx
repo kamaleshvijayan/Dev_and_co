@@ -2,7 +2,7 @@ import Layout from '../components/Layout'
 import { Card, CardHeader } from '../components/Card'
 import Badge from '../components/Badge'
 
-export default function Dashboard({ onLogout }: { onLogout: () => void }) {
+export default function Dashboard() {
   const now = new Date().toLocaleString()
   return (
     <Layout>
@@ -59,12 +59,7 @@ export default function Dashboard({ onLogout }: { onLogout: () => void }) {
           <a href="/drone" className="block">
             <Card className="card-hover">
               <CardHeader 
-                title={
-                  <span style={{display: 'flex', alignItems: 'center', gap: 8}}>
-                    <span style={{fontSize: '1.3em'}}>🚁</span>
-                    <span>Drone Camera Detect</span>
-                  </span>
-                }
+                title="🚁 Drone Camera Detect"
                 subtitle="Module"  
                 right={<Badge>Ready</Badge>} 
               />
@@ -74,12 +69,7 @@ export default function Dashboard({ onLogout }: { onLogout: () => void }) {
           <a href="/frequency" className="block">
             <Card className="card-hover">
               <CardHeader 
-                title={
-                  <span style={{display: 'flex', alignItems: 'center', gap: 8}}>
-                    <span style={{fontSize: '1.3em'}}>📡</span>
-                    <span>Frequency Detect</span>
-                  </span>
-                }
+                title="📡 Frequency Detect"
                 subtitle="Module" 
                 right={<Badge tone="warn">Monitoring</Badge>} 
               />
